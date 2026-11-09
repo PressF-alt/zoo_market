@@ -101,6 +101,117 @@
 
 ---
 
+##  Диаграмма (PlantUML)
+
+
+
+```plantuml
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Пользователь" as User
+
+rectangle "Внешние системы" {
+  actor "Банк" as Bank
+  actor "Груминг-салон" as Salon
+  actor "Ветклиника" as Clinic
+  actor "Заводчик" as Breeder
+  actor "Приют" as Shelter
+}
+
+rectangle "Система зоомагазина" {
+  usecase "Купить товар" as UC1
+  usecase "Оплатить товар" as UC2
+  usecase "Записаться на груминг" as UC3
+  usecase "Записаться к ветеринару" as UC4
+  usecase "Купить питомца" as UC5
+  usecase "Выбрать приют для доната" as UC6
+  usecase "Управление профилем лояльности" as UC7
+  usecase "Фильтр" as UC8
+  usecase "Поиск" as UC9
+  usecase "Доставка" as UC10
+  usecase "Самовывоз" as UC11
+  usecase "Оплата услуг" as UC12
+  usecase "Разместить услугу" as UC13
+  usecase "Выбрать услугу" as UC14
+  usecase "Выбрать способ доставки" as UC15
+  usecase "Донат в приют" as UC16
+  usecase "Оплатить донат" as UC17
+  usecase "Разместить питомца" as UC18
+
+  ' Дополнительные опции профиля лояльности
+  usecase "Просмотреть баланс бонусов" as UC19
+  usecase "История начислений и списаний" as UC20
+  usecase "Списать бонусы при оплате" as UC21
+  usecase "Активировать промокод" as UC22
+  usecase "Настроить уведомления по бонусам" as UC23
+  usecase "Привязать/отвязать карту лояльности" as UC24
+  usecase "Просмотреть уровень и условия" as UC25
+  usecase "Получить персональные предложения" as UC26
+  usecase "Зарегистрироваться в программе лояльности" as UC27
+}
+
+' Пользователь
+User --> UC1
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC16
+User --> UC7
+User --> UC21
+
+' Покупка товара
+UC1 ..> UC9  : <<include>>
+UC1 ..> UC8  : <<include>>
+UC1 ..> UC15 : <<include>>
+UC1 ..> UC2  : <<include>>
+
+' Выбор способа доставки
+UC15 <|-- UC10
+UC15 <|-- UC11
+
+' Услуги
+UC3 ..> UC14 : <<include>>
+UC3 ..> UC12 : <<include>>
+UC4 ..> UC14 : <<include>>
+UC4 ..> UC12 : <<include>>
+
+' Покупка питомца
+UC5 ..> UC2 : <<include>>
+
+' Донат
+UC16 ..> UC6 : <<include>>
+UC16 ..> UC17 : <<include>>
+
+' Профиль лояльности: базовые и дополнительные опции
+UC7 ..> UC19 : <<include>>
+UC7 ..> UC20 : <<include>>
+UC7 ..> UC22 : <<include>>
+UC7 ..> UC23 : <<include>>
+UC7 ..> UC24 : <<include>>
+UC7 ..> UC25 : <<include>>
+UC7 ..> UC26 : <<include>>
+UC7 ..> UC27 : <<include>>
+
+' Списание бонусов — необязательное расширение оплаты
+UC21 ..> UC2  : <<extend>>
+UC21 ..> UC12 : <<extend>>
+
+' Внешние системы
+Bank --> UC2
+Bank --> UC12
+Bank --> UC17
+
+Salon --> UC13
+Clinic --> UC13
+Shelter --> UC13
+Breeder --> UC18
+
+@enduml
+```
+
+---
 
 
 ````
